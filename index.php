@@ -7,6 +7,7 @@ namespace CommentSystem;
 use Core\MyRouter\FrontController;
 
 require_once 'AutoLoader.php';
+require_once 'bootstrap/global.php';
 $autoLoader = new AutoLoader();
 $autoLoader->register();
 

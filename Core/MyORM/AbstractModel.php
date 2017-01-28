@@ -4,8 +4,6 @@
 
 namespace Core\MyORM;
 
-use Model\ModelProxy;
-
 class AbstractModel
 {
     protected $id;

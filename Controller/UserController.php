@@ -9,10 +9,12 @@
 
 namespace Controller;
 
+use Core\MyFramework\View;
 use Core\MyFramework\Controller;
 
 class UserController extends Controller {
     public function add() {
-        echo "Creating a new user";
+        $view = new View('comments');
+        $view->render(array());
     }
 }

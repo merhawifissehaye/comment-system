@@ -1,37 +1,43 @@
 <?php
 
 // View.php
-namespace CommentSystem\Core\MyFramework;
+namespace Core\MyFramework;
 
 class View {
 
-	private $model;
-
-	private $controller;
-
-	private $layoutFilePath;
-
-	public function __construct($controller, $model)
-	{
-		
-		$this->controller = $controller;
-
-		$this->model = $model;
-	}
-
-	public function render()
-	{
-
-		$content = file_get_contents("../view/" . $this->model->tableName . ".template.php");
-
-		return $content;
-	}
+	protected $template = null;
 
 	/**
-	 * @param mixed $layoutFilePath
+	 * View constructor.
+	 * @param null $template
 	 */
-	public function setLayoutFilePath($layoutFilePath)
+	public function __construct($template)
 	{
-		$this->layoutFilePath = $layoutFilePath;
+		$this->template = $template;
+	}
+
+	public function escape($data) {
+		return htmlspecialchars((string)$data, ENT_QUOTES, 'UTF-8');
+	}
+
+	public function render(array $data = array()) {
+		extract($data);
+
+
+		$path = BASE_DIR . 'views/' . $this->template . '.tmp.php';
+		$yield = file_get_contents($path);
+
+		// get layout file
+		ob_start();
+		$path = BASE_DIR . 'views/layout.tmp.php';
+		if(file_exists($path)) {
+			include($path);
+		} else {
+			echo $yield;
+		}
+		$content = ob_get_contents();
+		ob_end_clean();
+
+		echo $content;
 	}
 }
