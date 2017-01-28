@@ -4,6 +4,7 @@
 
 namespace Core\MyFramework;
 
+use Core\MyORM\AbstractMapper;
 use Core\MyORM\Proxy\ModelProxy;
 
 class Model
@@ -81,5 +82,9 @@ class Model
     public function toArray()
     {
         return $this->_values;
+    }
+
+    public function save() {
+        echo "Saving the entity";
     }
 }

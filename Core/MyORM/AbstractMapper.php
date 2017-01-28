@@ -2,6 +2,7 @@
 
 // AbstractMapper.php
 namespace Core\MyORM;
+use Core\MyORM\Collection\ModelCollection;
 
 /**
  * @property array entityOptions
@@ -101,7 +102,7 @@ abstract class AbstractMapper implements MapperInterface
 
     public function find($conditions = '')
     {
-        $collection = new EntityCollection;
+        $collection = new ModelCollection;
         $this->_adapter->select($this->_entityTable, $conditions);
         while($data = $this->_adapter->fetch()) {
             $collection[] = $this->_createEntity($data);

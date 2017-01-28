@@ -12,6 +12,7 @@ namespace Controller;
 use Core\MyFramework\Controller;
 use Core\MyFramework\View;
 use Model\Comment;
+use Model\CommentMapper;
 
 class IndexController extends Controller
 {
@@ -51,7 +52,9 @@ class IndexController extends Controller
         );
 
         foreach($commentsArray as $comment) {
-            $commentModels[] = new Comment($comment);
+            $commentObject = new Comment($comment);
+            $commentModels[] = $commentObject;
+            $commentObject->save();
         }
         $view = new View('index');
         $view->render(array('comments' => $commentModels));

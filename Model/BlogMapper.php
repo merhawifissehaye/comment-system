@@ -1,10 +1,10 @@
 <?php
 
-// BlogMapper.php
 namespace Model;
 
 use Core\MyORM\AbstractMapper;
 use Core\MyORM\DatabaseAdapterInterface;
+use Core\MyORM\Proxy\CollectionProxy;
 
 class BlogMapper extends AbstractMapper {
 

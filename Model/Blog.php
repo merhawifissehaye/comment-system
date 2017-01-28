@@ -3,7 +3,7 @@
 // Blog.php
 namespace Model;
 
-use Core\MyORM\Model;
+use Core\MyFramework\Model;
 use Core\MyORM\Proxy\CollectionProxy;
 
 class Blog extends Model {
@@ -13,6 +13,7 @@ class Blog extends Model {
         'content',
         'comments'
     );
+
 
     public function setId($id) {
         if(!filter_var($id, FILTER_VALIDATE_INT, array('options' => array('min_range' => 1, 'max_range' => 65535)))) {

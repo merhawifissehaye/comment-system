@@ -14,6 +14,8 @@ use Core\MyORM\Proxy\ModelProxy;
 
 class Comment extends Model {
 
+    protected $_modelMapper;
+
     protected $_allowedFields = array(
         'id',
         'content',
