@@ -47,7 +47,7 @@ class CommentMapper extends AbstractMapper {
             'id' => isset($data['id']) ? $data['id'] : null,
             'content' => $data['content'],
             'user' => new UserProxy($this->_userMapper, $data['user_id']),
-            'blog' => new BlogProxy($this->_blogMapper, $data['blog_id']),
+            'blog' => new ModelProxy($this->_blogMapper, $data['blog_id']),
             'date_created' => time(),
             'date_modified' => time()
         ));

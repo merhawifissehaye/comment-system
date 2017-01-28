@@ -1,6 +1,10 @@
 <?php
 
 // Blog.php
+namespace Model;
+
+use Core\MyORM\AbstractModel;
+use Core\MyORM\Proxy\CollectionProxy;
 
 class Blog extends AbstractModel {
 
@@ -13,7 +17,7 @@ class Blog extends AbstractModel {
     public function setTitle($title)
     {
         if(!is_string($title) || strlen($title) < 2 || strlen($title) > 32) {
-            throw new InvalidArgumentException('Invalid blog title');
+            throw new \InvalidArgumentException('Invalid blog title');
         }
         $this->_values['title'] = $title;
     }
@@ -21,7 +25,7 @@ class Blog extends AbstractModel {
     public function setContent($content)
     {
         if(!is_string($content) || empty($content)) {
-            throw new InvalidArgumentException('The entry is invalid.');
+            throw new \InvalidArgumentException('The entry is invalid.');
         }
         $this->_values['content'] = $content;
     }

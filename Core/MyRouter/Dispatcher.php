@@ -10,6 +10,10 @@ class Dispatcher {
 
     public function dispatch(Route $route, RequestInterface $request, ResponseInterface  $response) {
         $controller = $route->createController();
-        $controller->execute($request, $response);
+        $method = $route->getMethodName();
+        if(!(method_exists($controller, $method) && is_callable(array($controller, $method)))) {
+            throw new \RuntimeException('Invalid method ' . $method . ' in controller ' . get_class($controller));
+        }
+        $controller->$method($request, $response);
     }
 }

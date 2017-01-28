@@ -15,13 +15,13 @@ require_once 'AutoLoader.php';
 $autoLoader = new AutoLoader();
 $autoLoader->register();
 
-$request = new Request("http://example.com/error");
+$request = new Request("http://example.com/test/");
 
 $response = new Response;
 
-$route1 = new Route("http://example.com/test/", "Controller\\CommentController");
+$route1 = new Route("http://example.com/test/", "Controller\\CommentController", 'test');
 
-$route2 = new Route("http://example.com/error", "Controller\\ErrorController");
+$route2 = new Route("http://example.com/error", "Controller\\CommentController", 'error');
 
 $router = new Router(array($route1, $route2));
 
