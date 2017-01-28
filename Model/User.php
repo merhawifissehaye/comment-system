@@ -9,15 +9,22 @@
 
 namespace Model;
 
-use Core\MyORM\AbstractModel;
+use Core\MyORM\Model;
 
-class User extends AbstractModel {
+class User extends Model {
 
     protected $_allowedFields = array(
         'name',
         'email',
         'password'
     );
+
+    public function setId($id) {
+        if(!filter_var($id, FILTER_VALIDATE_INT, array('options' => array('min_range' => 1, 'max_range' => 65535)))) {
+            throw new \InvalidArgumentException('The entry ID is invalid');
+        }
+        $this->_values['id'] = $id;
+    }
 
     public function setName($name) {
         if(!is_string($name) || strlen($name) < 2) {

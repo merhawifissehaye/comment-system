@@ -23,9 +23,11 @@ class View {
 	public function render(array $data = array()) {
 		extract($data);
 
-
+		ob_start();
 		$path = BASE_DIR . 'views/' . $this->template . '.tmp.php';
-		$yield = file_get_contents($path);
+		include($path);
+		$yield = ob_get_contents();
+		ob_end_clean();
 
 		// get layout file
 		ob_start();

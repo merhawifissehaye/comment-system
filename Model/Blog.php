@@ -3,16 +3,23 @@
 // Blog.php
 namespace Model;
 
-use Core\MyORM\AbstractModel;
+use Core\MyORM\Model;
 use Core\MyORM\Proxy\CollectionProxy;
 
-class Blog extends AbstractModel {
+class Blog extends Model {
 
     protected $_allowedFields = array(
         'title',
         'content',
         'comments'
     );
+
+    public function setId($id) {
+        if(!filter_var($id, FILTER_VALIDATE_INT, array('options' => array('min_range' => 1, 'max_range' => 65535)))) {
+            throw new \InvalidArgumentException('The entry ID is invalid');
+        }
+        $this->_values['id'] = $id;
+    }
 
     public function setTitle($title)
     {

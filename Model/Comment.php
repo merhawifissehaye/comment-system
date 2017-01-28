@@ -9,16 +9,25 @@
 
 namespace Model;
 
-use Core\MyORM\AbstractModel;
+use Core\MyFramework\Model;
 use Core\MyORM\Proxy\ModelProxy;
 
-class Comment extends AbstractModel {
+class Comment extends Model {
+
     protected $_allowedFields = array(
+        'id',
         'content',
         'user',
         'user_id',
         'blog_id'
     );
+
+    public function setId($id) {
+        if(!filter_var($id, FILTER_VALIDATE_INT, array('options' => array('min_range' => 1, 'max_range' => 65535)))) {
+            throw new \InvalidArgumentException('The entry ID is invalid');
+        }
+        $this->_values['id'] = $id;
+    }
 
     public function setContent($content)
     {

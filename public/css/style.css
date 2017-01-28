@@ -35,13 +35,14 @@ a[data-toggle="tab"] {
 
 .comment-item {
   border: solid 1px #9FE065;
-  border-top: none;
+  border-width: 0 1px;
   background: white;
   padding-bottom: 20px;
   padding-left: 20px;
 }
 .comment-item.active {
-  border-left-width: 5px;
+  border-left-width: 3px;
+  border-bottom-width: 1px;
 }
 .comment-item .header {
   margin: 20px 0 0 0;
@@ -72,4 +73,34 @@ a[data-toggle="tab"] {
   color: #999;
   padding-right: 20px;
   text-decoration: none;
+}
+
+.comment-form {
+  background: white;
+  border-left: solid 1px #9FE065;
+  border-right: solid 1px #9FE065;
+  border-top: solid 1px #ccc;
+  border-bottom: solid 1px #ccc;
+}
+.comment-form .form-group {
+  margin: 0;
+}
+.comment-form textarea {
+  resize: none;
+  outline: none;
+  margin-top: 20px;
+  border: none;
+}
+.comment-form textarea:focus {
+  box-shadow: none;
+}
+.comment-form .buttons {
+  border-bottom: solid 1px #ccc;
+  background: #ccc;
+}
+.comment-form .buttons .btn-default {
+  border-radius: 0;
+  background: #778289;
+  color: #fff;
+  width: 100px;
 }
