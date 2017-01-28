@@ -1,0 +1,10 @@
+{
+    "name": "root/comment-system",
+    "authors": [
+        {
+            "name": "Merhawi Fissehaye",
+            "email": "merhawifissehaye@gmail.com"
+        }
+    ],
+    "require": {}
+}

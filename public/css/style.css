@@ -1,0 +1,75 @@
+body {
+  padding-top: 30px;
+  background: #EBEEF1;
+}
+
+.btn-group .btn {
+  color: #3994FE;
+  border-color: #B1D1FD;
+}
+
+input[type=checkbox] {
+  position: relative;
+  top: -2px;
+  margin-right: 20px;
+}
+
+a[data-toggle="tab"] {
+  font-weight: 600;
+}
+
+#approved-manager-controls {
+  padding: 5px 0 5px 25px;
+  border: solid 1px #ccc;
+  border-top: none;
+  box-shadow: 1px 1px 1px #ccc;
+  background: white;
+}
+#approved-manager-controls input[type=checkbox] {
+  position: relative;
+  top: 7px;
+}
+#approved-manager-controls input[type=text] {
+  margin-left: 20px;
+}
+
+.comment-item {
+  border: solid 1px #9FE065;
+  border-top: none;
+  background: white;
+  padding-bottom: 20px;
+  padding-left: 20px;
+}
+.comment-item.active {
+  border-left-width: 5px;
+}
+.comment-item .header {
+  margin: 20px 0 0 0;
+}
+.comment-item h1, .comment-item h3 {
+  font-size: 14px;
+  font-weight: bolder;
+  color: #3994FE;
+  margin: 0;
+}
+.comment-item h3 {
+  margin-bottom: 10px;
+  display: inline-block;
+}
+.comment-item h3 + span {
+  color: #A0A8AE;
+}
+.comment-item p {
+  color: #707A80;
+}
+.comment-item .comment-content {
+  margin: 10px 0 0 30px;
+}
+.comment-item .comment-content .text-content {
+  margin-left: 30px;
+}
+.comment-item .buttons a {
+  color: #999;
+  padding-right: 20px;
+  text-decoration: none;
+}
