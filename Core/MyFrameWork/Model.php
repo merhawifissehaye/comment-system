@@ -9,10 +9,8 @@ use Core\MyORM\Proxy\ModelProxy;
 class Model
 {
     public $id;
-    public $date_created;
-    public $date_modified;
     protected $_values = array();
-    protected $_allowedFields = array();
+    protected $_allowedFields;
 
     /**
      * AbstractModel constructor.
@@ -23,15 +21,17 @@ class Model
         foreach($fields as $name => $value) {
             $this->$name = $value;
         }
-        $this->date_created = $this->date_modified = time();
     }
 
-    function __set($name, $value)
+    public function __set($name, $value)
     {
         if(!in_array($name, $this->_allowedFields)) {
             throw new \InvalidArgumentException('The field ' . $name . ' is not allowed for this entity.');
         }
         $mutator = 'set' . ucfirst($name);
+        $mutator = preg_replace_callback('/(_.)/', function($matches) {
+            return strtoupper(str_replace('_', '', $matches[0]));
+        }, $mutator);
         if(method_exists($this, $mutator) && is_callable(array($this, $mutator))) {
             $this->$mutator($value);
         } else {
@@ -39,7 +39,7 @@ class Model
         }
     }
 
-    function __get($name)
+    public function __get($name)
     {
         if(!in_array($name, $this->_allowedFields)) {
             throw new \InvalidArgumentException('The field ' . $name . ' is not allowed for this entity.');
@@ -61,7 +61,7 @@ class Model
         return $field;
     }
 
-    function __isset($name)
+    public function __isset($name)
     {
         if(!in_array($name, $this->_allowedFields)) {
             throw new \InvalidArgumentException('The field ' . $name . ' is not allowed for this entity.');
@@ -69,7 +69,7 @@ class Model
         return isset($this->_values[$name]);
     }
 
-    function __unset($name)
+    public function __unset($name)
     {
         if(!in_array($name, $this->_allowedFields)) {
             throw new \InvalidArgumentException('The field ' . $name . ' is not allowed for this entity.');

@@ -18,10 +18,12 @@ class Comment extends Model {
 
     protected $_allowedFields = array(
         'id',
+        'user_id',
         'user',
-        'blog',
         'status',
-        'comment'
+        'comment',
+        'date_created',
+        'date_modified'
     );
 
     public function setId($id) {
@@ -31,12 +33,12 @@ class Comment extends Model {
         $this->_values['id'] = $id;
     }
 
-    public function setContent($content)
+    public function setComment($content)
     {
-        if(!is_string($content) || strlen($content) < 2) {
+        if(!is_string($content)) {
             throw new \InvalidArgumentException('The comment is invalid.');
         }
-        $this->_values['content'] = $content;
+        $this->_values['comment'] = $content;
     }
 
     public function setUser(ModelProxy $user)

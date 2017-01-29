@@ -10,5 +10,5 @@
             <input type="text" placeholder="Search" class="form-control" />
         </div>
     </form>
-    <a href="/comment/create" class="btn btn-sm btn-default pull-right create-comment-btn">Create comment</a>
+    <a href="/comment/create" class="btn btn-sm btn-primary pull-right create-comment-btn"><i class="fa fa-plus"></i> Create comment</a>
 </div>

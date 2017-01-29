@@ -19,6 +19,6 @@ class IndexController extends Controller
         $blogService = ServiceLocator::getInstance()->getService('blog');
         $blogs = $blogService->find();
 
-        View::render('index', array('blogs' => $blogs));
+        View::render('blog/index', array('blogs' => $blogs));
     }
 }

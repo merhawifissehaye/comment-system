@@ -11,13 +11,16 @@ class BlogMapper extends AbstractMapper {
     protected $_entityTable = 'blogs';
     protected $_entityClass = '\\Model\\Blog';
 
+    protected $_commentMapper;
+
     /**
-     * BlogMapper constructor.
      * @param DatabaseAdapterInterface $adapter
+     * @param AbstractMapper $mapper
      */
-    public function __construct(DatabaseAdapterInterface $adapter)
+    public function __construct(DatabaseAdapterInterface $adapter, AbstractMapper $mapper)
     {
         parent::__construct($adapter);
+        $this->_commentMapper = $mapper;
     }
 
     protected function _createEntity(array $data)
@@ -25,11 +28,11 @@ class BlogMapper extends AbstractMapper {
         $entry = new $this->_entityClass(array(
             'id' => isset($data['id']) ? $data['id'] : null,
             'title' => $data['title'],
+            'comments' => new CollectionProxy($this->_commentMapper, 'blog_id = ' . $data['id']),
             'content' => $data['content'],
-            'date_created' => time(),
-            'date_modified' => time()
+            'date_created' => $data['date_created'],
+            'date_modified' => $data['date_modified']
         ));
-
         return $entry;
     }
 }

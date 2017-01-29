@@ -4,7 +4,6 @@
 
 namespace Core\MyInjector;
 
-use Model\BlogMapper;
 use Model\CommentMapper;
 use Model\UserMapper;
 use Service\CommentService;
@@ -17,7 +16,7 @@ class CommentServiceInjector implements InjectorInterface
         $mysqlAdapter = $mysqlAdapterInjector->create();
         return new CommentService(
             new CommentMapper($mysqlAdapter,
-                new UserMapper($mysqlAdapter), new BlogMapper($mysqlAdapter)
+                new UserMapper($mysqlAdapter)
             )
         );
     }

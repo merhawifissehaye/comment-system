@@ -26,7 +26,7 @@ class Blog extends Model {
 
     public function setTitle($title)
     {
-        if(!is_string($title) || strlen($title) < 1) {
+        if(!is_string($title)) {
             throw new \InvalidArgumentException('Invalid blog title');
         }
         $this->_values['title'] = $title;

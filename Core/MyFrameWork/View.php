@@ -3,16 +3,12 @@
 // View.php
 namespace Core\MyFramework;
 
-class View {
+use Core\MyRouter\FrontController;
 
-	protected $template = null;
-
-	public function escape($data) {
-		return htmlspecialchars((string)$data, ENT_QUOTES, 'UTF-8');
-	}
-
-	public static function render($template, array $data = array()) {
-
+class View
+{
+	public static function render($template, array $data = array())
+	{
 		extract($data);
 
 		if(isset($_SESSION['_redirect_data'])) {
@@ -20,6 +16,11 @@ class View {
 			extract($_SESSION['_redirect_data']);
 		}
 
+		unset($_SESSION['_redirect_data']);
+
+		$route = FrontController::$route;
+
+		// get view template
 		ob_start();
 		$path = BASE_DIR . 'views/' . $template . '.tmp.php';
 		include($path);
@@ -40,7 +41,8 @@ class View {
 		echo $content;
 	}
 
-	public static function redirect($location, $data = array()) {
+	public static function redirect($location, $data = array())
+	{
 		if(is_array($data) && !empty($data)) {
 			$_SESSION['_redirect_data'] = $data;
 		}

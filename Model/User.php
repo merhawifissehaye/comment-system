@@ -32,7 +32,7 @@ class User extends Model {
     }
 
     public function setName($name) {
-        if(!is_string($name) || strlen($name) < 2) {
+        if(!is_string($name)) {
             throw new \InvalidArgumentException('The name of the author is invalid.');
         }
         $this->_values['name'] = $name;

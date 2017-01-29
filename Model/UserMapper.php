@@ -19,8 +19,8 @@ class UserMapper extends AbstractMapper {
             'email' => $data['email'],
             'password' => $data['password'],
             'avatar_url' => $data['avatar_url'],
-            'date_created' => time(),
-            'date_modified' => time()
+            'date_created' => $data['date_created'],
+            'date_modified' => $data['date_modified']
         ));
 
         return $user;
