@@ -19,6 +19,7 @@ class Comment extends Model {
     protected $_allowedFields = array(
         'id',
         'user_id',
+        'blog_id',
         'user',
         'status',
         'comment',

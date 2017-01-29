@@ -12,6 +12,7 @@ namespace Controller;
 use Core\MyFramework\Controller;
 use Core\MyFramework\View;
 use Core\Service\ServiceLocator;
+use MFissehaye\CommentSecurityCheck\CommentSecurityCheck;
 use Model\Comment;
 use Service\BlogService;
 use Service\CommentService;
@@ -34,12 +35,16 @@ class CommentController extends Controller
     }
 
     public function index() {
+        // Check if comment is valid here
         $comments = $this->commentService->find();
         View::render('comment/index', array('comments' => $comments));
     }
 
     public function create() {
         if(isset($_POST['comment']) && isset($_POST['blog_id'])) {
+
+            $csc = new CommentSecurityCheck(HOST, DB_USER, DB_PASS, DB_NAME);
+
             $comment = new Comment(array(
                 'comment' => $_POST['comment'],
                 'user_id' => 1,
@@ -71,15 +76,21 @@ class CommentController extends Controller
 
     public function spammed() {
         $comments = $this->commentService->find('status="SPAM"');
-        View::render('comment/index', array('comments' => $comments));
+        View::render('spam/index', array('comments' => $comments));
     }
 
     public function approve($id) {
-        $this->updateStatus($id, 'APPROVED');
+        $comment = $this->commentService->findById($id);
+        $comment->status = 'APPROVED';
+        $this->commentService->update($comment);
+        View::redirect('/comment/approved', array('message' => 'Approved comment successfully'));
     }
 
     public function spam($id) {
-        $this->updateStatus($id, 'SPAM');
+        $comment = $this->commentService->findById($id);
+        $comment->status = 'SPAM';
+        $this->commentService->update($comment);
+        View::redirect('/comment/spammed', array('message' => 'Spammed comment successfully'));
     }
 
     public function delete($id) {
@@ -87,10 +98,22 @@ class CommentController extends Controller
         View::redirect('/comment/', array('message' => 'Deleted comment succesffully'));
     }
 
-    private function updateStatus($id, $status) {
-        $comment = $this->commentService->findById($id);
-        $comment->status = $status;
-        $this->commentService->update($comment);
-        View::redirect('/comment/approved', array('message' => ucfirst(strtolower($status)) . 'ed comment successfully'));
+    public function createspam() {
+        $config = array(HOST, DB_USER, DB_PASS, DB_NAME);
+        $csc = new CommentSecurityCheck($config);
+        $words = $csc->getSpamWords();
+
+        if(isset($_POST['create_spam_submitted'])) {
+            $word = $_POST['word'];
+            if($word != '' && !in_array($word, $words)) {
+                $csc->addToSpam($word);
+                View::redirect('/comment/createspam', array('message' => 'Added spam word successfully'));
+                return;
+            } else {
+                View::redirect('/comment/createspam', array('error' => 'Enter valid spam word'));
+                return;
+            }
+        }
+        View::render('spam/create', array('spams' => $words));
     }
 }

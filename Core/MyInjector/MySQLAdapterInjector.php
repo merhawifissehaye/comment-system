@@ -13,10 +13,10 @@ class MySQLAdapterInjector implements InjectorInterface
     {
         if(self::$_mysqlAdapter === null) {
             self::$_mysqlAdapter = new MySQLAdapter(array(
-                'localhost',
-                'homestead',
-                'secret',
-                'commentsystem'
+                HOST,
+                DB_USER,
+                DB_PASS,
+                DB_NAME
             ));
         }
         return self::$_mysqlAdapter;
