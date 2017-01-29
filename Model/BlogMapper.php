@@ -28,7 +28,7 @@ class BlogMapper extends AbstractMapper {
         $entry = new $this->_entityClass(array(
             'id' => isset($data['id']) ? $data['id'] : null,
             'title' => $data['title'],
-            'comments' => new CollectionProxy($this->_commentMapper, 'blog_id = ' . $data['id']),
+            'comments' => new CollectionProxy($this->_commentMapper, 'status="APPROVED" && blog_id = ' . $data['id']),
             'content' => $data['content'],
             'date_created' => $data['date_created'],
             'date_modified' => $data['date_modified']
