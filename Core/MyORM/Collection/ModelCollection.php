@@ -31,6 +31,16 @@ class ModelCollection implements CollectionInterface {
         return $this->_entities;
     }
 
+    public function toJson()
+    {
+        $jsonEntities = array();
+        foreach($this->_entities as $entity) {
+            $jsonEntities[] = $entity->toArray();
+
+        }
+        return $jsonEntities;
+    }
+
     public function clear()
     {
         $this->_entities = array();

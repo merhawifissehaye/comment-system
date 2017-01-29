@@ -8,7 +8,7 @@
     <div class="form-group clearfix">
         <textarea class="form-control" id="commentArea" name="comment" placeholder="Write your comments here"></textarea>
         <div class="buttons clearfix">
-            <p class="pull-left">Please don't enter bad words like <strong>Buy Viagra</strong></p>
+            <p class="pull-left">Write your comments above</p>
             <button class="pull-right btn btn-primary">Post</button>
         </div>
     </div>

@@ -6,4 +6,4 @@ endforeach;
 
 ?>
 <br>
-<a href="/comment/createspam" class="but btn-sm btn-primary"><i class="fa fa-plus"></i> Add spam word</a>
+<a href="/comment/createspam" class="but btn-sm btn-primary"><i class="fa fa-plus"></i> Manage spam words</a>

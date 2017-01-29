@@ -32,6 +32,7 @@ class CommentController extends Controller
     {
         $this->commentService = ServiceLocator::getInstance()->getService('comment');
         $this->blogService = ServiceLocator::getInstance()->getService('blog');
+        $this->csc = new CommentSecurityCheck(array(HOST, DB_USER, DB_PASS, DB_NAME));
     }
 
     public function index() {
@@ -42,14 +43,11 @@ class CommentController extends Controller
 
     public function create() {
         if(isset($_POST['comment']) && isset($_POST['blog_id'])) {
-
-            $csc = new CommentSecurityCheck(HOST, DB_USER, DB_PASS, DB_NAME);
-
             $comment = new Comment(array(
                 'comment' => $_POST['comment'],
                 'user_id' => 1,
                 'blog_id' => $_POST['blog_id'],
-                'status' => 'PENDING',
+                'status' => $this->csc->hasSpamWord($_POST['comment']) ? 'SPAM' : 'PENDING',
                 'date_created' => date('Y-m-d H:i:s', time()),
                 'date_modified' => date('Y-m-d H:i:s', time())
             ));
@@ -76,6 +74,10 @@ class CommentController extends Controller
 
     public function spammed() {
         $comments = $this->commentService->find('status="SPAM"');
+        $spamWords = $this->csc->getSpamWords();
+        foreach($comments as $comment) {
+            $comment->comment = $this->csc->focusSpamWord($comment->comment);
+        }
         View::render('spam/index', array('comments' => $comments));
     }
 
@@ -99,14 +101,21 @@ class CommentController extends Controller
     }
 
     public function createspam() {
-        $config = array(HOST, DB_USER, DB_PASS, DB_NAME);
-        $csc = new CommentSecurityCheck($config);
-        $words = $csc->getSpamWords();
+
+        $words = $this->csc->getSpamWords();
 
         if(isset($_POST['create_spam_submitted'])) {
             $word = $_POST['word'];
             if($word != '' && !in_array($word, $words)) {
-                $csc->addToSpam($word);
+                $this->csc->addToSpam($word);
+                // If a new spam word is added, go through all comments and spam
+                $comments = $this->commentService->find();
+                foreach($comments as $comment) {
+                    if($this->csc->hasSpamWord($comment->comment)) {
+                        $comment->status = 'SPAM';
+                        $this->commentService->update($comment);
+                    }
+                }
                 View::redirect('/comment/createspam', array('message' => 'Added spam word successfully'));
                 return;
             } else {
@@ -115,5 +124,20 @@ class CommentController extends Controller
             }
         }
         View::render('spam/create', array('spams' => $words));
+    }
+
+    public function deletespam($id) {
+        $this->csc->removeFromSpam($id);
+        View::redirect('/comment/createspam', array('message' => 'Removed spam word'));
+    }
+
+    public function getJson() {
+        $comments = $this->commentService->find();
+        header('Content-Type: application/json');
+        echo json_encode($comments->toJson());
+    }
+
+    public function setStatusByAjax() {
+        print_r($_POST);
     }
 }

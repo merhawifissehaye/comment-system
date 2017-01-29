@@ -4,7 +4,7 @@ $spammed = $comment->status == 'SPAM';
 ?>
 <div class="clearfix comment-item <?php if($approved) echo 'approved'; if($spammed) echo 'spammed'; ?>">
     <div class="header">
-        <input type="checkbox" id="comment-item-checkbox-<?php echo $comment->id ?>" class="comment-item-checkbox pull-left" />
+        <input type="checkbox" id="comment-item-checkbox-<?php echo $comment->id ?>" name="comment-item" value="<?php echo $comment->id ?>" class="comment-item-checkbox pull-left" />
         <div class="comment-content">
             <div class="avatar pull-left">
                 <img src="<?php echo $comment->user->avatar_url ?>" width="60" alt="" />
@@ -12,7 +12,7 @@ $spammed = $comment->status == 'SPAM';
             <div class="text-content pull-left">
                 <div class="title">
                 </div>
-                <p><?php echo $comment->comment ?></p>
+                <p class="title"><?php echo $comment->comment ?></p>
                 <div class="buttons">
                     <?php if(!$approved): ?>
                         <a href="<?php echo '/comment/approve/' . $comment->id ?>">

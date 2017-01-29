@@ -4,9 +4,25 @@
 <?php if(isset($message)): ?>
     <p class="alert alert-success"><?php echo $message ?></p>
 <?php endif ?>
-<?php foreach($spams as $spam): ?>
-    <p><?php echo $spam ?></p>
-<?php endforeach; ?>
+<div class="row container">
+	<div class="container col-md-8">
+		<table class="table table-bordered table-condensed">
+			<thead>
+				<th>Spam Word</th>
+				<th>Delete</th>
+			</thead>
+			<tbody>
+				<?php foreach($spams as $id => $spam): ?>
+				    <tr>
+						<td><?php echo $spam ?></td>
+						<td><a href="/comment/deletespam/<?php echo $id ?>"><i class="fa fa-trash"></i> Delete</a></td>
+					</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
+	</div>
+</div>
+
 <form method="post" action="/comment/createspam" class="col-md-6">
     <div class="form-group">
         <label for="word">Enter spam word</label>
