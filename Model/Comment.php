@@ -18,10 +18,10 @@ class Comment extends Model {
 
     protected $_allowedFields = array(
         'id',
-        'content',
         'user',
-        'user_id',
-        'blog_id'
+        'blog',
+        'status',
+        'comment'
     );
 
     public function setId($id) {
@@ -42,5 +42,10 @@ class Comment extends Model {
     public function setUser(ModelProxy $user)
     {
         $this->_values['user'] = $user;
+    }
+
+    public function setBlog(ModelProxy $blog)
+    {
+        $this->_values['blog'] = $blog;
     }
 }

@@ -9,7 +9,7 @@
 
 namespace Core\MyORM\Collection;
 
-use Core\MyORM\AbstractModel;
+use Core\MyFramework\Model;
 
 class ModelCollection implements CollectionInterface {
 
@@ -41,7 +41,7 @@ class ModelCollection implements CollectionInterface {
         reset($this->_entities);
     }
 
-    public function add($key, AbstractModel $entity)
+    public function add($key, Model $entity)
     {
         return $this->offsetSet($key, $entity);
     }
@@ -84,7 +84,7 @@ class ModelCollection implements CollectionInterface {
 
     public function offsetSet($key, $entity)
     {
-        if(!$entity instanceof AbstractModel) {
+        if(!$entity instanceof Model) {
             throw new \InvalidArgumentException('Only add instances of AbstractModel');
         }
         if(!isset($key)) {
@@ -98,7 +98,7 @@ class ModelCollection implements CollectionInterface {
 
     public function offsetUnset($key)
     {
-        if($key instanceof AbstractModel) {
+        if($key instanceof Model) {
             $this->_entities = array_filter($this->_entities, function($v) use ($key) {
                 return $v !== $key;
             });

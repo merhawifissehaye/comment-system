@@ -18,7 +18,7 @@ class MySQLAdapter implements DatabaseAdapterInterface
     public function __construct(array $_config)
     {
         if(count($_config) !== 4) {
-            throw new \InvalidArgumentException('Inalid number of connection parameters');
+            throw new \InvalidArgumentException('Invalid number of connection parameters');
         }
         $this->_config = $_config;
     }

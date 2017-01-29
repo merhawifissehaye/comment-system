@@ -10,8 +10,12 @@ body {
 
 input[type=checkbox] {
   position: relative;
-  top: -2px;
+  top: 7px;
   margin-right: 20px;
+}
+
+.nav.nav-pills {
+  margin-bottom: 20px;
 }
 
 a[data-toggle="tab"] {
@@ -24,10 +28,6 @@ a[data-toggle="tab"] {
   border-top: none;
   box-shadow: 1px 1px 1px #ccc;
   background: white;
-}
-#approved-manager-controls input[type=checkbox] {
-  position: relative;
-  top: 7px;
 }
 #approved-manager-controls input[type=text] {
   margin-left: 20px;
@@ -103,4 +103,7 @@ a[data-toggle="tab"] {
   background: #778289;
   color: #fff;
   width: 100px;
+}
+.create-comment-btn {
+  margin-right: 20px;
 }

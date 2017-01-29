@@ -7,24 +7,21 @@ class View {
 
 	protected $template = null;
 
-	/**
-	 * View constructor.
-	 * @param null $template
-	 */
-	public function __construct($template)
-	{
-		$this->template = $template;
-	}
-
 	public function escape($data) {
 		return htmlspecialchars((string)$data, ENT_QUOTES, 'UTF-8');
 	}
 
-	public function render(array $data = array()) {
+	public static function render($template, array $data = array()) {
+
 		extract($data);
 
+		if(isset($_SESSION['_redirect_data'])) {
+
+			extract($_SESSION['_redirect_data']);
+		}
+
 		ob_start();
-		$path = BASE_DIR . 'views/' . $this->template . '.tmp.php';
+		$path = BASE_DIR . 'views/' . $template . '.tmp.php';
 		include($path);
 		$yield = ob_get_contents();
 		ob_end_clean();
@@ -41,5 +38,12 @@ class View {
 		ob_end_clean();
 
 		echo $content;
+	}
+
+	public static function redirect($location, $data = array()) {
+		if(is_array($data) && !empty($data)) {
+			$_SESSION['_redirect_data'] = $data;
+		}
+		header("Location: $location");
 	}
 }

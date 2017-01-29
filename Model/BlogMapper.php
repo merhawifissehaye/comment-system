@@ -8,26 +8,16 @@ use Core\MyORM\Proxy\CollectionProxy;
 
 class BlogMapper extends AbstractMapper {
 
-    protected $_commentMapper;
     protected $_entityTable = 'blogs';
-    protected $_entityClass = 'BlogModel';
+    protected $_entityClass = '\\Model\\Blog';
 
     /**
      * BlogMapper constructor.
      * @param DatabaseAdapterInterface $adapter
-     * @param CommentMapper $_commentMapper
      */
-    public function __construct(DatabaseAdapterInterface $adapter, CommentMapper $_commentMapper)
+    public function __construct(DatabaseAdapterInterface $adapter)
     {
-        $this->_commentMapper = $_commentMapper;
         parent::__construct($adapter);
-    }
-
-
-    public function delete($id, $col = 'id')
-    {
-        parent::delete($id, $col);
-        $this->_commentMapper->delete($id, 'blog_id');
     }
 
     protected function _createEntity(array $data)
@@ -36,7 +26,6 @@ class BlogMapper extends AbstractMapper {
             'id' => isset($data['id']) ? $data['id'] : null,
             'title' => $data['title'],
             'content' => $data['content'],
-            'comments' => new CollectionProxy($this->_commentMapper, "entry_id = {$data['id']}"),
             'date_created' => time(),
             'date_modified' => time()
         ));

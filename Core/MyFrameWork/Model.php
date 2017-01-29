@@ -4,7 +4,6 @@
 
 namespace Core\MyFramework;
 
-use Core\MyORM\AbstractMapper;
 use Core\MyORM\Proxy\ModelProxy;
 
 class Model
@@ -46,6 +45,9 @@ class Model
             throw new \InvalidArgumentException('The field ' . $name . ' is not allowed for this entity.');
         }
         $accessor = 'get' . ucfirst($name);
+        $accessor = preg_replace_callback('/(_.)/', function($matches) {
+            return strtoupper(str_replace('_', '', $matches[0]));
+        }, $accessor);
         if(method_exists($this, $accessor) && is_callable(array($this, $accessor))) {
             return $this->$accessor;
         }
@@ -70,7 +72,7 @@ class Model
     function __unset($name)
     {
         if(!in_array($name, $this->_allowedFields)) {
-            throw new \InvalidArgumentException('The firld ' . $name . ' is not allowed for this entity.');
+            throw new \InvalidArgumentException('The field ' . $name . ' is not allowed for this entity.');
         }
         if(isset($this->_values[$name])) {
             unset($this->_values[$name]);
@@ -82,9 +84,5 @@ class Model
     public function toArray()
     {
         return $this->_values;
-    }
-
-    public function save() {
-        echo "Saving the entity";
     }
 }

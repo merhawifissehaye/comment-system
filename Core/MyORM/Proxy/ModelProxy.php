@@ -9,7 +9,7 @@
 
 namespace Core\MyORM\Proxy;
 
-use Core\MyORM\AbstractModel;
+use Core\MyFramework\Model;
 
 class ModelProxy extends AbstractProxy implements ProxyInterface {
 
@@ -19,7 +19,7 @@ class ModelProxy extends AbstractProxy implements ProxyInterface {
     {
         if($this->_entity === null) {
             $this->_entity = $this->_mapper->findById($this->_params);
-            if(!$this->_entity instanceof AbstractModel) {
+            if(!$this->_entity instanceof Model) {
                 throw new \RuntimeException('Unable to load the related entity');
             }
         }

@@ -4,13 +4,19 @@
 
 namespace CommentSystem;
 
+use Core\MyInjector\BlogServiceInjector;
+use Core\MyInjector\CommentServiceInjector;
 use Core\MyRouter\FrontController;
+use Core\Service\ServiceLocator;
 
 require_once 'AutoLoader.php';
 require_once 'bootstrap/global.php';
 $autoLoader = new AutoLoader();
 $autoLoader->register();
 
-$frontController = new FrontController();
+$serviceLocator = ServiceLocator::getInstance();
+$serviceLocator->addInjector('blog', new BlogServiceInjector);
+$serviceLocator->addInjector('comment', new CommentServiceInjector);
 
+$frontController = new FrontController();
 $frontController->run();

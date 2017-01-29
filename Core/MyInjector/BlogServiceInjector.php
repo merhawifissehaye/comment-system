@@ -3,9 +3,8 @@
 // BlogServiceInjector.php
 namespace Core\MyInjector;
 
+use Service\BlogService;
 use Model\BlogMapper;
-use Model\CommentMapper;
-use Model\UserMapper;
 
 class BlogServiceInjector implements InjectorInterface
 {
@@ -13,14 +12,6 @@ class BlogServiceInjector implements InjectorInterface
     {
         $mysqlInjector = new MySQLAdapterInjector;
         $mysqlAdapter = $mysqlInjector->create();
-        return new ModelService(
-            new BlogMapper(
-                $mysqlAdapter,
-                new CommentMapper(
-                    $mysqlAdapter,
-                    new UserMapper($mysqlAdapter)
-                )
-            )
-        );
+        return new BlogService(new BlogMapper($mysqlAdapter));
     }
 }

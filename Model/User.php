@@ -9,14 +9,19 @@
 
 namespace Model;
 
-use Core\MyORM\Model;
+use Core\MyFramework\Model;
 
 class User extends Model {
 
     protected $_allowedFields = array(
+        'id',
         'name',
+        'password',
         'email',
-        'password'
+        'password',
+        'avatar_url',
+        'date_created',
+        'date_modified'
     );
 
     public function setId($id) {

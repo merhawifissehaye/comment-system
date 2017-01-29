@@ -9,11 +9,13 @@ use Core\MyORM\Proxy\CollectionProxy;
 class Blog extends Model {
 
     protected $_allowedFields = array(
+        'id',
         'title',
         'content',
-        'comments'
+        'comments',
+        'date_created',
+        'date_modified'
     );
-
 
     public function setId($id) {
         if(!filter_var($id, FILTER_VALIDATE_INT, array('options' => array('min_range' => 1, 'max_range' => 65535)))) {
@@ -24,7 +26,7 @@ class Blog extends Model {
 
     public function setTitle($title)
     {
-        if(!is_string($title) || strlen($title) < 2 || strlen($title) > 32) {
+        if(!is_string($title) || strlen($title) < 1) {
             throw new \InvalidArgumentException('Invalid blog title');
         }
         $this->_values['title'] = $title;

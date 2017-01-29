@@ -2,13 +2,26 @@
 
 // ServiceLocator.php
 
+namespace Core\Service;
+
 use Core\MyInjector\InjectorInterface;
-use Core\Service\AbstractService;
 
 class ServiceLocator
 {
     protected $_injectors = array();
     protected $_services = array();
+    private static $_instance;
+
+    private function __construct() {
+
+    }
+
+    public static function getInstance() {
+        if(self::$_instance == null) {
+            self::$_instance = new ServiceLocator;
+        }
+        return self::$_instance;
+    }
 
     public function addInjector($key, InjectorInterface $injector)
     {
@@ -66,7 +79,7 @@ class ServiceLocator
             return $this->_services[$key];
         }
         if(!isset($this->_injectors[$key])) {
-            throw new RuntimeException('The specified service cannot be created because the associated injector does not exist.');
+            throw new \RuntimeException('The specified service cannot be created because the associated injector does not exist.');
         }
         $service = $this->getInjector($key)->create();
         $this->addService($key, $service);
