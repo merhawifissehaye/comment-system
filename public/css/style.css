@@ -46,6 +46,12 @@ a[data-toggle="tab"] {
   padding-bottom: 20px;
   padding-left: 20px;
 }
+.comment-item.approved {
+  background: #c5e0d0;
+}
+.comment-item.spammed {
+  background: #f2dede;
+}
 .comment-item.active {
   border-left-width: 3px;
   border-bottom-width: 1px;

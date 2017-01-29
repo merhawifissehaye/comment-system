@@ -6,5 +6,7 @@
             "email": "merhawifissehaye@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "mfissehaye/comment-security-check": "dev-master"
+    }
 }

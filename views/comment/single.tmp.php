@@ -1,4 +1,8 @@
-<div class="clearfix comment-item">
+<?php
+$approved = $comment->status == 'APPROVED';
+$spammed = $comment->status == 'SPAM';
+?>
+<div class="clearfix comment-item <?php if($approved) echo 'approved'; if($spammed) echo 'spammed'; ?>">
     <div class="header">
         <input type="checkbox" id="comment-item-checkbox-<?php echo $comment->id ?>" class="comment-item-checkbox pull-left" />
         <div class="comment-content">
@@ -10,9 +14,23 @@
                 </div>
                 <p><?php echo $comment->comment ?></p>
                 <div class="buttons">
-                    <a href="#"><i class="fa fa-check"></i> Approve</a>
-                    <a href="#"><i class="fa fa-ban"></i> Spam</a>
-                    <a href="#"><i class="fa fa-trash"></i> Delete</a>
+                    <?php if(!$approved): ?>
+                        <a href="<?php echo '/comment/approve/' . $comment->id ?>">
+                            <span class="text-primary"><i class="fa fa-check"></i> Approve</span>
+                        </a>
+                    <?php endif; ?>
+                    <?php if(!$spammed): ?>
+                    <a href="<?php echo '/comment/spam/' . $comment->id ?>">
+                        <span class="text-primary">
+                            <i class="fa fa-ban"></i> Spam
+                        </span>
+                    </a>
+                    <?php endif; ?>
+                    <a href="<?php echo '/comment/delete/' . $comment->id ?>">
+                        <span class="text-primary">
+                            <i class="fa fa-trash"></i> Delete
+                        </span>
+                    </a>
                 </div>
             </div>
         </div>

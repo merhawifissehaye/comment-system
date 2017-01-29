@@ -12,9 +12,9 @@
     <ul class="nav nav-pills">
         <li <?php echo in_array($route, ['blog', 'index']) ? 'class="active"' : '' ?>><a href="/blog/">Blogs</a></li>
         <li <?php echo $route == 'comment' ? 'class="active"' : '' ?>><a href="/comment/">All Comments</a></li>
-        <li <?php echo $route == 'comment/approved' ? 'class="active"' : '' ?>><a href="/comment/approved/">Approved</a></li>
+        <li <?php echo $route == 'comment/approved' ? 'class="active"' : '' ?>><a href="<?php echo BASE_URL ?>/comment/approved/">Approved</a></li>
         <li <?php echo $route == 'comment/pending' ? 'class="active"' : '' ?>><a href="/comment/pending/">Pending</a></li>
-        <li <?php echo $route == 'comment/spam' ? 'class="active"' : '' ?>><a href="/comment/spam/">Spam</a></li>
+        <li <?php echo $route == 'comment/spam' ? 'class="active"' : '' ?>><a href="/comment/spammed/">Spam</a></li>
         <li><a href="/invalid/link">Invalid Link (404)</a></li>
     </ul>
     <?php echo $yield; ?>

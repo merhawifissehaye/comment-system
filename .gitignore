@@ -4,3 +4,4 @@ node_modules
 /vendor/
 npm-debug.log
 archive/
+composer.lock

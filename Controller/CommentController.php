@@ -69,8 +69,28 @@ class CommentController extends Controller
         View::render('comment/index', array('comments' => $comments));
     }
 
-    public function spam() {
+    public function spammed() {
         $comments = $this->commentService->find('status="SPAM"');
         View::render('comment/index', array('comments' => $comments));
+    }
+
+    public function approve($id) {
+        $this->updateStatus($id, 'APPROVED');
+    }
+
+    public function spam($id) {
+        $this->updateStatus($id, 'SPAM');
+    }
+
+    public function delete($id) {
+        $this->commentService->delete($id);
+        View::redirect('/comment/', array('message' => 'Deleted comment succesffully'));
+    }
+
+    private function updateStatus($id, $status) {
+        $comment = $this->commentService->findById($id);
+        $comment->status = $status;
+        $this->commentService->update($comment);
+        View::redirect('/comment/approved', array('message' => ucfirst(strtolower($status)) . 'ed comment successfully'));
     }
 }

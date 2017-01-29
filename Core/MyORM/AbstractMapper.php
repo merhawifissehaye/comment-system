@@ -115,9 +115,6 @@ abstract class AbstractMapper implements MapperInterface
         if(!$entity instanceof $this->_entityClass) {
             throw new \InvalidArgumentException('The entity to be inserted must be an instance of ' . $this->_entityClass . '.');
         }
-        echo '<pre>';
-        print_r($entity);
-        echo '</pre>';
         return $this->_adapter->insert($this->_entityTable, $entity->toArray());
     }
 

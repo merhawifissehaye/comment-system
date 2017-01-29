@@ -24,9 +24,6 @@ class CommentMapper extends AbstractMapper {
         parent::__construct($adapter);
     }
 
-    /**
-     * @return UserMapper
-     */
     public function getUserMapper()
     {
         return $this->_userMapper;
@@ -38,9 +35,22 @@ class CommentMapper extends AbstractMapper {
             'id' => isset($data['id']) ? $data['id'] : null,
             'comment' => $data['comment'],
             'user' => new ModelProxy($this->_userMapper, $data['user_id']),
+            'status' => $data['status'],
             'date_created' => $data['date_created'],
             'date_modified' => $data['date_modified']
         ));
         return $comment;
+    }
+
+    public function update($entity) {
+        if(!$entity instanceof $this->_entityClass) {
+            throw new \InvalidArgumentException('The entity to be updated must be an instance of ' . $this->_entityClass . '.');
+        }
+        $id = $entity->id;
+        $data = $entity->toArray();
+        $data['user_id'] = $data['user']->load()->id;
+        unset($data['user']);
+        unset($data['id']);
+        return $this->_adapter->update($this->_entityTable, $data, "id = $id");
     }
 }
