@@ -39,6 +39,36 @@
             }
         });
 
+        var updateScreen = function(options) {
+
+            var message = options.message;
+            var ids = options.ids;
+            var addClass = options.addClass;
+            var removeClass = options.removeClass;
+            var remove = options.remove || false;
+            var $notification = $('#notification').find('.alert');
+
+            ids = ids.map(function(i) { return '#comment-item-checkbox-' + i });
+            $('.spam-button-inside-comment').show();
+            $('.comment-item').removeClass('approved').removeClass('spammed');
+            var $boxesSelector = $(ids.join(',')).closest('.comment-item');
+
+            if($notification.length < 1) {
+                $notification = $('<p class="alert alert-success">' + message + '</p>');
+                $notification.appendTo('#notification');
+            } else {
+                $notification.text(message);
+            }
+
+            if(remove) {
+                console.log('removing item');
+                $boxesSelector.remove();
+                return;
+            }
+
+            $boxesSelector.addClass(addClass.replace('.', '')).find(removeClass).hide();
+        };
+
         $('#manage-approve').on('click', function() {
             // send ajax request to approve selected items
             console.log('Approving items');
@@ -48,36 +78,69 @@
                     checkedIds.push($(v).val());
                 }
             });
-            console.log(checkedIds);
 
+            var url = '/comment/approveJson/' + checkedIds.join(',');
             $.ajax({
-                type: 'GET',
-                url: '/comment/setStatusByAjax',
-                data: {
-                    'text': 'Hello World'
-                },
-                dataType: 'json'
-            }).then(function(d, e) {
-                console.log(e);
+                type: 'POST',
+                url: url,
+                dataType: 'json',
+                success: function(data) {
+                    updateScreen({
+                        message: data['message'],
+                        ids: data['ids'],
+                        addClass: 'approved',
+                        removeClass: '.approve-button-inside-comment'
+                    });
+                }
             });
         });
+
         $('#manage-spam').on('click', function() {
             // send ajax request to approve selected items
-            console.log('Spamming items');
             var checkedIds = new Array();
             $('.comment-item-checkbox').each(function(i,v) {
                 if($(v).prop('checked')) {
                     checkedIds.push($(v).val());
                 }
             });
+
+            var url = '/comment/spamJson/' + checkedIds.join(',');
+            $.ajax({
+                type: 'POST',
+                url: url,
+                dataType: 'json',
+                success: function(data) {
+                    updateScreen({
+                        message: data['message'],
+                        ids: data['ids'],
+                        addClass: 'spammed',
+                        removeClass: '.spam-button-inside-comment'
+                    });
+                }
+            });
         });
+
         $('#manage-delete').on('click', function() {
             // send ajax request to approve selected items
-            console.log('Deleting items');
             var checkedIds = new Array();
             $('.comment-item-checkbox').each(function(i,v) {
                 if($(v).prop('checked')) {
                     checkedIds.push($(v).val());
+                }
+            });
+
+            var url = '/comment/deleteJson/' + checkedIds.join(',');
+            $.ajax({
+                type: 'POST',
+                url: url,
+                dataType: 'json',
+                success: function(data) {
+                    updateScreen({
+                        message: data['message'],
+                        ids: data['ids'],
+                        removeClass: '.delete-button-inside-comment',
+                        remove: true
+                    });
                 }
             });
         });

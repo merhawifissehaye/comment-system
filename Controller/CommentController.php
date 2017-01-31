@@ -81,22 +81,34 @@ class CommentController extends Controller
         View::render('spam/index', array('comments' => $comments));
     }
 
-    public function approve($id) {
+    private function approveLogic($id) {
         $comment = $this->commentService->findById($id);
         $comment->status = 'APPROVED';
         $this->commentService->update($comment);
+    }
+
+    public function approve($id) {
+        $this->approveLogic($id);
         View::redirect('/comment/approved', array('message' => 'Approved comment successfully'));
     }
 
-    public function spam($id) {
+    private function spamLogic($id) {
         $comment = $this->commentService->findById($id);
         $comment->status = 'SPAM';
         $this->commentService->update($comment);
+    }
+
+    public function spam($id) {
+        $this->spamLogic($id);
         View::redirect('/comment/spammed', array('message' => 'Spammed comment successfully'));
     }
 
-    public function delete($id) {
+    private function deleteLogic($id) {
         $this->commentService->delete($id);
+    }
+
+    public function delete($id) {
+        $this->deleteLogic($id);
         View::redirect('/comment/', array('message' => 'Deleted comment succesffully'));
     }
 
@@ -137,7 +149,45 @@ class CommentController extends Controller
         echo json_encode($comments->toJson());
     }
 
-    public function setStatusByAjax() {
-        print_r($_POST);
+    public function approveJson($ids) {
+        $idsArray = explode(',', $ids);
+        foreach($idsArray as $id) {
+            $this->approveLogic($id);
+        }
+        header('Content-Type: application/json');
+        echo json_encode(
+            array(
+                'ids' => $idsArray,
+                'message' => 'Successfully approved comments'
+            )
+        );
+    }
+
+    public function spamJson($ids) {
+        $idsArray = explode(',', $ids);
+        foreach($idsArray as $id) {
+            $this->spamLogic($id);
+        }
+        header('Content-Type: application/json');
+        echo json_encode(
+            array(
+                'ids' => $idsArray,
+                'message' => 'Successfully spammed comments'
+            )
+        );
+    }
+
+    public function deleteJson($ids) {
+        $idsArray = explode(',', $ids);
+        foreach($idsArray as $id) {
+            $this->deleteLogic($id);
+        }
+        header('Content-Type: application/json');
+        echo json_encode(
+            array(
+                'ids' => $idsArray,
+                'message' => 'Deleted comments'
+            )
+        );
     }
 }
