@@ -32,6 +32,7 @@ class CommentController extends Controller
     {
         $this->commentService = ServiceLocator::getInstance()->getService('comment');
         $this->blogService = ServiceLocator::getInstance()->getService('blog');
+        $this->authService = ServiceLocator::getInstance()->getService('auth');
         $this->csc = new CommentSecurityCheck(array(HOST, DB_USER, DB_PASS, DB_NAME));
     }
 
@@ -139,5 +140,11 @@ class CommentController extends Controller
 
     public function setStatusByAjax() {
         print_r($_POST);
+    }
+
+    public function signin() {
+        if(!$this->authService->login('merhawi', 'test')) {
+            echo "You need to login first";
+        }
     }
 }
