@@ -1,6 +1,9 @@
-<?php if(isset($message)): ?>
-    <p class="alert alert-success"><?php echo $message; ?></p>
-<?php endif; ?>
+<div id="notification">
+    <?php if(isset($message)): ?>
+        <p class="alert alert-success"><?php echo $message; ?></p>
+    <?php endif; ?>
+</div>
+
 
 <?php if($route == 'comment'): ?>
 <?php include 'manager.tmp.php' ?>

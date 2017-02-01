@@ -86,16 +86,6 @@ CREATE TABLE `spam` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `spam`
---
-
-LOCK TABLES `spam` WRITE;
-/*!40000 ALTER TABLE `spam` DISABLE KEYS */;
-INSERT INTO `spam` VALUES (1,'adding'),(2,'spam'),(3,'invalid'),(4,'what the fuck'),(5,'what the fuck'),(6,'what the fuck'),(7,'how are you'),(8,'Do not use viagra'),(9,'Don\'t use viagra'),(10,'Am I using viagra righ tnow \'$9');
-/*!40000 ALTER TABLE `spam` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `users`
 --
 

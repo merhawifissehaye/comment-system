@@ -15,18 +15,18 @@ $spammed = $comment->status == 'SPAM';
                 <p class="title"><?php echo $comment->comment ?></p>
                 <div class="buttons">
                     <?php if(!$approved): ?>
-                        <a href="<?php echo '/comment/approve/' . $comment->id ?>">
+                        <a href="<?php echo '/comment/approve/' . $comment->id ?>" class="approve-button-inside-comment button-inside-comment">
                             <span class="text-primary"><i class="fa fa-check"></i> Approve</span>
                         </a>
                     <?php endif; ?>
                     <?php if(!$spammed): ?>
-                    <a href="<?php echo '/comment/spam/' . $comment->id ?>">
+                    <a href="<?php echo '/comment/spam/' . $comment->id ?>" class="spam-button-inside-comment button-inside-comment">
                         <span class="text-primary">
                             <i class="fa fa-ban"></i> Spam
                         </span>
                     </a>
                     <?php endif; ?>
-                    <a href="<?php echo '/comment/delete/' . $comment->id ?>">
+                    <a href="<?php echo '/comment/delete/' . $comment->id ?>" class="delete-button-inside-comment button-inside-comment">
                         <span class="text-primary">
                             <i class="fa fa-trash"></i> Delete
                         </span>
